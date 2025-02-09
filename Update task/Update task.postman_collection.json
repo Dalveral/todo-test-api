@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "8f45dc7a-04d9-442a-80fb-3baedafe8d92",
+		"name": "Update task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31095874"
+	},
+	"item": [
+		{
+			"name": "Create new task",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test(\"Task id:\", function () {",
+							"    pm.expect(response.id).to.be.a('number')",
+							"});",
+							"",
+							"pm.globals.set(\"record_id\", response.id);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Помочь маме с одноклассниками\",\n  \"description\": \"Уже скоро год пройдет, а маме так и не помог. Надо бы исправиться.\",\n  \"completed\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/todo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update task with correct id task Copy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200)",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Установвить маме телеграм\",\n  \"description\": \"Научить маму пользоваться телеграм и добавить туда всех ее друзей.\",\n  \"completed\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/todo/{{record_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todo",
+						"{{record_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update task with bad data",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500)",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Установвить маме телеграм\",\n  \"description\": \"Научить маму пользоваться Telegram — это не просто установка приложения, а целый процесс, который включает в себя несколько этапов. Сначала нужно объяснить, что такое Telegram и какие преимущества он предоставляет по сравнению с другими мессенджерами. Затем, после установки приложения на её телефон, важно показать, как создать аккаунт и настроить профиль. После этого можно перейти к основным функциям: как отправлять и получать сообщения, как делать голосовые и видеозвонки, а также как отправлять фотографии и видео. Не забудьте рассказать о том, как создавать группы и каналы, чтобы мама могла общаться с друзьями и получать интересные новости. Также стоит уделить внимание безопасности: объяснить, как настроить конфиденциальность, блокировать нежелательных пользователей и использовать двухфакторную аутентификацию. После того как мама освоит основные функции, важно добавить туда всех её друзей, чтобы она могла легко общаться с ними. Это может включать в себя поиск контактов, добавление их в список и объяснение, как начать разговор. Таким образом, процесс обучения будет не только полезным, но и увлекательным, что поможет маме чувствовать себя уверенно в использовании Telegram.\",\n  \"completed\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/todo/{{record_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todo",
+						"{{record_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update task with bad data 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400)",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Установвить маме телеграм\",\n  \"description\": {\n    \"name\": \"telegram\",\n    \"is_default\": false\n  },\n  \"completed\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/todo/{{record_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todo",
+						"{{record_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update task without correct id task",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400)",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Установвить маме телеграм\",\n  \"description\": \"Научить маму пользоваться телеграм и добавить туда всех ее друзей.\",\n  \"completed\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/todo/{{record_id}}123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todo",
+						"{{record_id}}123"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
