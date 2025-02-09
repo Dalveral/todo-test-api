@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "fe079322-533e-471d-94cf-2803c610539d",
+		"name": "Create task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31095874"
+	},
+	"item": [
+		{
+			"name": "Create new task",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const title = pm.iterationData.get(\"title\");",
+							"const description = pm.iterationData.get(\"description\");",
+							"const completed = pm.iterationData.get(\"completed\");",
+							"",
+							"pm.variables.set(\"title\", title);",
+							"pm.variables.set(\"description\", description);",
+							"pm.variables.set(\"completed\", completed);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const expectedStatus = pm.iterationData.get(\"expected_status\");",
+							"",
+							"pm.test(`Status code is ${expectedStatus}`, function () {",
+							"    pm.response.to.have.status(expectedStatus);",
+							"});",
+							"",
+							"pm.test(\"createdAt has +03:00 timezone\", function () {",
+							"    if (pm.response.code === 200) {",
+							"        const responseJson = pm.response.json();",
+							"        pm.expect(responseJson.createdAt.endsWith(\"+03:00\")).to.be.true;",
+							"    }",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"{{title}}\",\n  \"description\": \"{{description}}\",\n  \"completed\": {{completed}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/todo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200)",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/todo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todo"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
